@@ -111,8 +111,10 @@ def input_num_float(msg):
 
 def mostrar_produtos():
     print("\nProdutos disponíveis:")
-    for i, nome in enumerate(produtos, start=1):
+    i = 1
+    for nome in produtos:
         print(f"{i}. {nome}")
+        i += 1
     print()
 
 def cadastrar_produto():
