@@ -54,10 +54,11 @@ O objetivo é **representar a lógica de cálculo de custos e precificação de 
 
 ### Funções principais
 
-* `adicionar_produto()` — permite criar um novo produto dinamicamente no dicionário
+* `atualizar_produto()` — permite atualizar um produto dinamicamente no dicionário
+* `cadastrar_produto()` — permite remover um produto dinamicamente no dicionário
+* `remover_produto()` — permite cadastrar um produto dinamicamente no dicionário
 * `listar_produtos()` — exibe todos os produtos disponíveis
-* `gerar_orcamento()` — coleta as escolhas do usuário, soma os preços e calcula o lucro
-* `menu()` — interface principal, com opções de ação
+* `simular_orcamento()` — coleta as escolhas do usuário, soma os preços e calcula o lucro
 
 ---
 
