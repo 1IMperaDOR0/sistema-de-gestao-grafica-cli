@@ -76,7 +76,8 @@ python main.py
 Você é:
 cliente
 funcionário
--> cliente ou funcionario
+sair
+-> cliente ou funcionario ou sair
 ```
 
 Nenhuma biblioteca externa é necessária.
