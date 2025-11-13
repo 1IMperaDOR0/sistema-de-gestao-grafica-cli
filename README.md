@@ -75,7 +75,7 @@ python main.py
 ```
 Você é:
 cliente
-funcionário
+funcionario
 sair
 -> cliente ou funcionario ou sair
 ```
