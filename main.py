@@ -1,3 +1,11 @@
+import unicodedata
+
+def tratar_texto(txt):
+    txt = txt.strip().lower()
+    txt = unicodedata.normalize("NFD", txt)
+    txt = "".join(c for c in txt if unicodedata.category(c) != "Mn")
+    return txt
+
 produtos = {
     "Flyer": {
         "opcoes": {
@@ -86,28 +94,28 @@ precos = {
 }
 
 def forca_opcao(msg, lista_opcoes):
-    lista_opcoes = list(lista_opcoes)
-    opcoes_text = '\n'.join(lista_opcoes)
-    opcao = input(f"{msg}\n{opcoes_text}\n-> ").strip()
-    while opcao not in lista_opcoes:
-        print("Inválido! Digite exatamente uma das opções acima.")
-        opcao = input(f"{msg}\n{opcoes_text}\n-> ").strip()
-    return opcao
+    lista_original = list(lista_opcoes)
+    lista_norm = [tratar_texto(x) for x in lista_original]
+    while True:
+        entrada = tratar_texto(input(f"{msg}" + "\n" + "\n".join(lista_original) + "\n-> "))
+        if entrada in lista_norm:
+            return lista_original[lista_norm.index(entrada)]
+        print("Opção inválida.\n")
 
 def input_num_int(msg):
     while True:
         v = input(msg).strip()
         if v.isdigit():
             return int(v)
-        print("Precisa ser um número inteiro (ex: 10).")
+        print("Precisa ser número inteiro.")
 
 def input_num_float(msg):
     while True:
-        v = input(msg).strip().replace(',', '.')
+        v = input(msg).replace(",", ".").strip()
         try:
             return float(v)
         except ValueError:
-            print("Precisa ser um número (ex: 10.5). Use , ou . para separar decimais.")
+            print("Número inválido.")
 
 def mostrar_produtos():
     print("\nProdutos disponíveis:")
@@ -264,32 +272,31 @@ def atualizar_produto():
         else:  
             break
 
-def listar_detalhes():
-    mostrar_produtos()
-    nome = input("Digite o nome do produto para ver detalhes (ou 'sair'): ").strip()
-    if nome.lower() == 'sair':
+def listar_tudo():
+    print("\n---------------- PRODUTOS ----------------")
+    if not produtos:
+        print("Nenhum produto cadastrado.")
         return
-    if nome not in produtos:
-        print("Produto não encontrado.")
-        return
-    print("\n--- DETALHES DO PRODUTO ---")
-    print(f"Produto: {nome}")
-    for cat, opcs in produtos[nome]['opcoes'].items():
-        print(f"\nCategoria: {cat}")
-        for k, v in opcs.items():
-            preco = precos.get(nome, {}).get(cat, {}).get(k, '---')
-            print(f"  {k} - {v}  |  R$ {preco if preco == '---' else f'{preco:.2f}'}")
-    print("---------------------------")
+    for prod, dados in produtos.items():
+        print(f"\n>>> {prod}")
+        for categoria, itens in dados["opcoes"].items():
+            print(f"  - {categoria}")
+            for chave, descricao in itens.items():
+                preco = precos.get(prod, {}).get(categoria, {}).get(chave, "---")
+                preco = f"R$ {preco:.2f}" if preco != "---" else "---"
+                print(f"      {chave} -> {descricao} | {preco}")
+    print("-------------------------------------------\n")
 
 def escolher_produto_cliente():
     mostrar_produtos()
-    nome = input("Digite o nome do produto que deseja (ou 'sair'): ").strip()
-    if nome.lower() == 'sair':
+    entrada = tratar_texto(input("Digite o nome (ou sair): "))
+    if entrada == "sair":
         return None
-    if nome not in produtos:
-        print("Produto não encontrado.")
-        return None
-    return nome
+    for k in produtos.keys():
+        if tratar_texto(k) == entrada:
+            return k
+    print("Produto não encontrado.\n")
+    return escolher_produto_cliente()
 
 def simular_orcamento(produto_nome):
     produto = produtos[produto_nome]
@@ -297,47 +304,41 @@ def simular_orcamento(produto_nome):
     escolhas = {}
     custo_unitario = 0.0
 
-    print(f"\nVocê escolheu: {produto_nome}")
-    print("Selecione as opções abaixo:\n")
-
-    for categoria, opcoes in produto['opcoes'].items():
-        print(f"{categoria}:")
-        for chave, descricao in opcoes.items():
-            preco_str = ""
-            preco_val = preco_ref.get(categoria, {}).get(chave)
-            if preco_val is not None:
-                preco_str = f"R$ {preco_val:.2f}"
-            print(f"  {chave} - {descricao} {(' | ' + preco_str) if preco_str else ''}")
-        escolha = input(f"Escolha {categoria} (digite a chave): ").strip()
-        while escolha not in opcoes:
-            print("Opção inválida.")
-            escolha = input(f"Escolha {categoria} (digite a chave): ").strip()
-        escolhas[categoria] = escolha
-        preco_escolha = preco_ref.get(categoria, {}).get(escolha)
-        if preco_escolha is None:
-            print(f"Atenção: não há preço cadastrado para {categoria} -> {escolha}. Será usado R$ 0.00.")
-            preco_escolha = 0.0
-        custo_unitario += float(preco_escolha)
-
-    adicionar_custos = forca_opcao("Quer adicionar custo unitário extra (ex: embalagem)?", ['sim', 'nao'])
-    custos_extras = {}
-    if adicionar_custos == 'sim':
+    print(f"\n--- {produto_nome} ---")
+    for categoria, opcs in produto["opcoes"].items():
+        print(f"\n{categoria}:")
+        for chave, desc in opcs.items():
+            preco = preco_ref.get(categoria, {}).get(chave, 0)
+            print(f"  {chave} - {desc} | R$ {preco:.2f}")
         while True:
-            nome_custo = input("Nome do custo extra (ou Enter para terminar): ").strip()
-            if nome_custo == "":
+            inp = tratar_texto(input(f"Escolha ({categoria}): "))
+            mapa = {tratar_texto(k): k for k in opcs.keys()}
+            if inp in mapa:
+                escolha_real = mapa[inp]
                 break
-            valor = input_num_float("Valor por unidade (R$): ")
-            custos_extras[nome_custo] = float(valor)
-            custo_unitario += float(valor)
+            print("Opção inválida.")
+        escolhas[categoria] = escolha_real
+        custo_unitario += preco_ref.get(categoria, {}).get(escolha_real, 0)
 
-    quantidade = input_num_int("\nQuantidade desejada: ")
-    markup = input_num_float("Porcentagem de lucro desejada (%): ")
+    custos_extras = {}
+    print()
+    add_extra = forca_opcao("Adicionar custos extras?", ["sim", "nao"])
+    if add_extra == "sim":
+        while True:
+            nome = input("Nome do custo extra (Enter para terminar): ").strip()
+            if nome == "":
+                break
+            valor = input_num_float("Valor por unidade: R$ ")
+            custos_extras[nome] = valor
+            custo_unitario += valor
+
+    quantidade = input_num_int("Quantidade: ")
+    markup = input_num_float("Markup (%): ")
 
     custo_total = custo_unitario * quantidade
-    preco_unitario = custo_unitario * (1 + markup / 100)
+    preco_unitario = custo_unitario * (1 + markup/100)
     preco_total = preco_unitario * quantidade
-    lucro_unit = preco_unitario - custo_unitario
-    lucro_total = lucro_unit * quantidade
+    lucro_total = preco_total - custo_total
 
     print("\n----- ORÇAMENTO -----")
     print(f"Produto: {produto_nome}")
@@ -357,36 +358,35 @@ def simular_orcamento(produto_nome):
     print(f"Preço total (com markup): R$ {preco_total:.2f}")
     print(f"Lucro total estimado: R$ {lucro_total:.2f}")
     print("----------------------")
+    print()
 
-def main():
+while True:
+    print()
     print("BEM VINDO AO SISTEMA DE GESTÃO GRÁFICA (CLI)\n")
-    usuario = forca_opcao("Você é:", ['cliente', 'funcionário'])
-    if usuario == 'funcionário':
+    usuario = forca_opcao("Você é:", ["cliente", "funcionario", "sair"])
+    if usuario == "sair":
+        print("Encerrando...")
+        break
+    if usuario == "funcionario":
         while True:
-            operacao = forca_opcao("Qual operação será realizada?", ['cadastrar', 'remover', 'atualizar', 'listar', 'sair'])
-            if operacao == 'cadastrar':
+            print()
+            acao = forca_opcao("Operação:", ["cadastrar", "remover", "atualizar", "listar", "voltar"])
+            if acao == "voltar":
+                break
+            if acao == "cadastrar":
                 cadastrar_produto()
-            elif operacao == 'remover':
+            if acao == "remover":
                 remover_produto()
-            elif operacao == 'atualizar':
+            if acao == "atualizar":
                 atualizar_produto()
-            elif operacao == 'listar':
-                listar_detalhes()
-            elif operacao == 'sair':
-                print("Saindo do modo funcionário.")
-                break
-            cont = forca_opcao("Deseja realizar outra operação?", ['sim', 'nao'])
-            if cont == 'nao':
-                break
-    else:
+            if acao == "listar":
+                listar_tudo()
+    if usuario == "cliente":
         while True:
-            escolha = escolher_produto_cliente()
-            if escolha is None:
+            esc = escolher_produto_cliente()
+            if esc is None:
                 break
-            simular_orcamento(escolha)
-            cont = forca_opcao("Fazer outro orçamento ou sair?", ['continuar', 'sair'])
-            if cont == 'sair':
-                print("Obrigado. Até mais.")
+            simular_orcamento(esc)
+            prox = forca_opcao("Continuar, voltar ou sair?", ["continuar", "voltar", "sair"])
+            if prox != "continuar":
                 break
-
-main()
