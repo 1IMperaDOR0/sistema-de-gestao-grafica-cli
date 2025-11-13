@@ -90,26 +90,33 @@ Produtos disponíveis:
 2. Pasta Personalizada
 3. Folder 2 Dobras
 
-Digite o nome do produto: Flyer
+Digite o nome (ou sair): flyer
+
+--- Flyer ---
 
 Formato:
-  A4 - 21,0 x 29,7 cm
-  A5 - 14,8 x 21,0 cm
-Escolha Formato: A5
+  A4 - 21,0 x 29,7 cm | R$ 0.80
+  A5 - 14,8 x 21,0 cm | R$ 0.60
+  A6 - 10,5 x 14,8 cm | R$ 0.50
+  A7 - 7,4 x 10,5 cm | R$ 0.40
+Escolha (Formato): a4
 
-Impressão:
-  1 - Frente e Verso
-  2 - Frente
-Escolha Impressão: 1
+Impressao:
+  1 - Frente e Verso | R$ 0.30
+  2 - Frente | R$ 0.20
+Escolha (Impressao): 1
 
 Papel:
-  1 - Couché Brilho 90g
-  2 - Couché Brilho 115g
-  3 - Couché Fosco 150g
-Escolha Papel: 2
-
-Quantidade desejada: 100
-Porcentagem de lucro (%): 25
+  1 - Couché Brilho 90g | R$ 0.10
+  2 - Couché Brilho 115g | R$ 0.12
+  3 - Couché Fosco 150g | R$ 0.15
+Escolha (Papel): 2
+Adicionar custos extras?
+sim
+nao
+-> nao
+Quantidade: 12
+Markup (%): 25
 ```
 
 Saída:
@@ -117,14 +124,17 @@ Saída:
 ```
 ----- ORÇAMENTO -----
 Produto: Flyer
-Formato: 14,8 x 21,0 cm
-Impressão: Frente e Verso
-Papel: Couché Brilho 115g
+Formato: 21,0 x 29,7 cm (chave: A4) - R$ 0.80
+Impressao: Frente e Verso (chave: 1) - R$ 0.30
+Papel: Couché Brilho 115g (chave: 2) - R$ 0.12
 
-Custo por unidade: R$ 0.92
-Custo total: R$ 92.00
-Lucro aplicado: 25%
-Preço final (com lucro): R$ 115.00
+Custo por unidade: R$ 1.22
+Quantidade: 12
+Custo total: R$ 14.64
+Markup aplicado: 25.00%
+Preço por unidade (com markup): R$ 1.53
+Preço total (com markup): R$ 18.30
+Lucro total estimado: R$ 3.66
 ----------------------
 ```
 
