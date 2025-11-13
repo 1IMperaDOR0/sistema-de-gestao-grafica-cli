@@ -139,4 +139,4 @@ Preço final (com lucro): R$ 115.00
 
 ## 📜 Licença
 
-Projeto acadêmico. Uso livre para fins educacionais.
+Este projeto está licenciado sob a Licença MIT. Consulte [MIT License](https://mit-license.org/) para o texto completo.
