@@ -47,7 +47,7 @@ produtos = {
             }
         }
     },
-    "Folder 2 Dobras": {
+    "Adesivo Personalizado": {
         "opcoes": {
             "Formato": {
                 "1": "5 x 5 cm",
