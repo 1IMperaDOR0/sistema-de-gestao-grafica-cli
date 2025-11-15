@@ -20,7 +20,7 @@ O objetivo é **representar a lógica de cálculo de custos e precificação de 
 
 ### 🔹 Cadastro e consulta
 
-* Exibe produtos disponíveis: Flyer, Pasta Personalizada e Folder 2 Dobras
+* Exibe produtos disponíveis: Flyer, Pasta Personalizada, Folder 2 Dobras e Adesivo Personalizado
 * Permite adicionar **novos produtos** com categorias e opções personalizadas
 * Cada produto contém:
 
@@ -87,21 +87,30 @@ Nenhuma biblioteca externa é necessária.
 ## 📈 6. Exemplo de uso
 
 ```
+BEM VINDO AO SISTEMA DE GESTÃO GRÁFICA (CLI)
+
+Você é:
+cliente
+funcionario
+sair
+-> cliente
+
 Produtos disponíveis:
 1. Flyer
 2. Pasta Personalizada
 3. Folder 2 Dobras
+4. Adesivo Personalizado
 
 Digite o nome (ou sair): flyer
 
 --- Flyer ---
 
 Formato:
-  A4 - 21,0 x 29,7 cm | R$ 0.80
-  A5 - 14,8 x 21,0 cm | R$ 0.60
-  A6 - 10,5 x 14,8 cm | R$ 0.50
-  A7 - 7,4 x 10,5 cm | R$ 0.40
-Escolha (Formato): a4
+  1 - A4 (21,0 x 29,7 cm) | R$ 0.80
+  2 - A5 (14,8 x 21,0 cm) | R$ 0.60
+  3 - A6 (10,5 x 14,8 cm) | R$ 0.50
+  4 - A7 (7,4 x 10,5 cm) | R$ 0.40
+Escolha (Formato): 1
 
 Impressao:
   1 - Frente e Verso | R$ 0.30
@@ -112,7 +121,8 @@ Papel:
   1 - Couché Brilho 90g | R$ 0.10
   2 - Couché Brilho 115g | R$ 0.12
   3 - Couché Fosco 150g | R$ 0.15
-Escolha (Papel): 2
+Escolha (Papel): 1
+
 Adicionar custos extras?
 sim
 nao
@@ -126,17 +136,17 @@ Saída:
 ```
 ----- ORÇAMENTO -----
 Produto: Flyer
-Formato: 21,0 x 29,7 cm (chave: A4) - R$ 0.80
+Formato: A4 (21,0 x 29,7 cm) (chave: 1) - R$ 0.80
 Impressao: Frente e Verso (chave: 1) - R$ 0.30
-Papel: Couché Brilho 115g (chave: 2) - R$ 0.12
+Papel: Couché Brilho 90g (chave: 1) - R$ 0.10
 
-Custo por unidade: R$ 1.22
+Custo por unidade: R$ 1.20
 Quantidade: 12
-Custo total: R$ 14.64
+Custo total: R$ 14.40
 Markup aplicado: 25.00%
-Preço por unidade (com markup): R$ 1.53
-Preço total (com markup): R$ 18.30
-Lucro total estimado: R$ 3.66
+Preço por unidade (com markup): R$ 1.50
+Preço total (com markup): R$ 18.00
+Lucro total estimado: R$ 3.60
 ----------------------
 ```
 

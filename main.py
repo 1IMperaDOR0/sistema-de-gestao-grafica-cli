@@ -47,6 +47,29 @@ produtos = {
             }
         }
     },
+    "Folder 2 Dobras": {
+        "opcoes": {
+            "Formato (fechado)": {
+                "1": "DL (10 x 20 cm)",
+                "2": "A4 (21,0 x 29,7 cm)",
+                "3": "A6 (10,5 x 14,8 cm)"
+            },
+            "Formato (aberto)": {
+                "1": "6 Páginas - Vertical",
+                "2": "8 Páginas - Vertical"
+            },
+            "Papel": {
+                "1": "Couché Fosco 90g",
+                "2": "Couché Brilho 115g",
+                "3": "Offset 90g"
+            },
+            "Serrilha": {
+                "1": "Sem Serrilha Vertical (6 Páginas) - Carteira",
+                "2": "Serrilha Vertical - Páginas 1 e 2 (6 Páginas) - Carteira",
+                "3": "Serrilha Vertical - Páginas 4 e 5 (6 Páginas) - Carteira"
+            }
+        }
+    },
     "Adesivo Personalizado": {
         "opcoes": {
             "Formato": {
@@ -86,6 +109,12 @@ precos = {
         "Serrilha": {"1": 0.00, "2": 0.08, "3": 0.08}
     },
     "Folder 2 Dobras": {
+        "Formato (fechado)": {"1": 0.20, "2": 0.15, "3": 0.18},
+        "Formato (aberto)": {"1": 0.18, "2": 0.25},
+        "Papel": {"1": 0.10, "2": 0.12, "3": 0.14},
+        "Serrilha": {"1": 0.05, "2": 0.04, "3": 0.03}
+    },
+    "Adesivo Personalizado": {
         "Formato": {"1": 0.20, "2": 0.15, "3": 0.18},
         "Impressao": {"1": 0.18, "2": 0.25, "3": 0.30},
         "Extras": {"1": 0.10, "2": 0.12, "3": 0.14},
