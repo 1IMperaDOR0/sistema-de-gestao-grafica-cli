@@ -199,8 +199,7 @@ def cadastrar_produto():
     print(f"Produto '{nome}' cadastrado com sucesso.")
 
 def remover_produto():
-    mostrar_produtos()
-    nome = input("Digite o nome do produto a remover: ").strip()
+    nome = forca_opcao("Digite o nome do produto a remover: ", list(produtos.keys()))
     if nome not in produtos:
         print("Produto não encontrado.")
         return
@@ -213,11 +212,10 @@ def remover_produto():
         print("Operação cancelada.")
 
 def atualizar_produto():
-    mostrar_produtos()
-    nome = input("Nome do produto a atualizar: ").strip()
+    nome = forca_opcao("Nome do produto a atualizar: ", list(produtos.keys()))
     if nome not in produtos:
         print("Produto não encontrado.")
-        return
+        nome = atualizar_produto()
 
     while True:
         print(f"\nAtualizando '{nome}' - escolha a ação:")
