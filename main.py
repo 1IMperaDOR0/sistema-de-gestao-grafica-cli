@@ -211,9 +211,6 @@ def remover_produto():
 
 def atualizar_produto():
     nome = forca_opcao("Nome do produto a atualizar: ", list(produtos.keys()))
-    if nome not in produtos:
-        print("Produto não encontrado.")
-        nome = atualizar_produto()
 
     while True:
         print(f"\nAtualizando '{nome}' - escolha a ação:")
