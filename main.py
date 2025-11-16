@@ -200,9 +200,6 @@ def cadastrar_produto():
 
 def remover_produto():
     nome = forca_opcao("Digite o nome do produto a remover: ", list(produtos.keys()))
-    if nome not in produtos:
-        print("Produto não encontrado.")
-        return
     confirmar = forca_opcao(f"Tem certeza que quer remover '{nome}'? ", ['sim', 'nao'])
     if confirmar == 'sim':
         produtos.pop(nome, None)
@@ -210,6 +207,7 @@ def remover_produto():
         print(f"Produto '{nome}' removido.")
     else:
         print("Operação cancelada.")
+    return
 
 def atualizar_produto():
     nome = forca_opcao("Nome do produto a atualizar: ", list(produtos.keys()))
