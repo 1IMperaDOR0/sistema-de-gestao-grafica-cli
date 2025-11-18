@@ -153,6 +153,7 @@ def mostrar_produtos():
         print(f"{i}. {nome}")
         i += 1
     print()
+    return
 
 def cadastrar_produto():
     print("\n--- CADASTRAR PRODUTO ---")
@@ -186,7 +187,7 @@ def cadastrar_produto():
         print(f"\nAdicionando opções para a categoria '{cat}'.")
         print("Digite as opções uma a uma. Para encerrar esta categoria, deixe o nome vazio e tecle Enter.")
         while True:
-            chave = input(f" - Chave da opção (ex: 'A4' ou '1') (Enter para terminar '{cat}'): ").strip()
+            chave = input(f" - Chave da opção (ex: '1') (Enter para terminar '{cat}'): ").strip()
             if chave == "":
                 break
             descricao = input("   Descrição (texto mostrável pro cliente): ").strip()
